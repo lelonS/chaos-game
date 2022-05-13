@@ -26,17 +26,27 @@ def get_points(amount, center):
 def get_new_point(p1, p2, m):
     return (int((p1[0] + p2[0]) * m), int((p1[1] + p2[1]) * m))
 
-    # CONSTANTS
+
+def reset_screen():
+    SCREEN.fill(BACKGROUND)
+    # SCREEN.blit(bg, (0, 0))
+    draw_points(points)
+
+
+# CONSTANTS
 WIDTH = 900
 HEIGHT = WIDTH
 
 RADIUS = WIDTH / 2 if WIDTH <= HEIGHT else HEIGHT / 2
 RADIUS = RADIUS - 10
 
+MAX_LOOP = 1000
+
 BACKGROUND = (0, 0, 0)
+# bg = pygame.image.load("img/test.png")
+
 
 SCREEN = pygame.display.set_mode((WIDTH, HEIGHT))
-SCREEN.fill(BACKGROUND)
 pygame.display.update()
 
 # Variables
@@ -52,16 +62,22 @@ prev_point = current_point
 
 running = True
 
+reset_screen()
 while running:
 
     added_points = 0
+    tries = 0
     while added_points < amount_per_frame:
+        tries += 1
+        if tries > MAX_LOOP:
+            break
         random_point = random.choice(points)
-        if random_point != prev_point or allow_repeat_point:
+        if (random_point != prev_point or allow_repeat_point) and SCREEN.get_at(get_new_point(current_point, random_point, mult)) != (255, 255, 255, 255):
             prev_point = random_point
             current_point = get_new_point(current_point, random_point, mult)
-            pygame.draw.rect(SCREEN, (255, 0, 0),
-                             (current_point[0], current_point[1], 1, 1))
+            # pygame.draw.rect(SCREEN, (255, 0, 0),
+            #                  (current_point[0], current_point[1], 1, 1))
+            SCREEN.set_at(current_point, (255, 0, 0))
             added_points += 1
 
     # Get events
@@ -71,17 +87,14 @@ while running:
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_UP:
             amount_points += 1
             points = get_points(amount_points, (WIDTH/2, HEIGHT/2))
-            SCREEN.fill(BACKGROUND)
-            draw_points(points)
+            reset_screen()
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_DOWN:
             amount_points -= 1
             points = get_points(amount_points, (WIDTH/2, HEIGHT/2))
-            SCREEN.fill(BACKGROUND)
-            draw_points(points)
+            reset_screen()
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_r:
             allow_repeat_point = not allow_repeat_point
-            SCREEN.fill(BACKGROUND)
-            draw_points(points)
+            reset_screen()
 
     pygame.display.update()
 # QUIT
