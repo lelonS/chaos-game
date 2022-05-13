@@ -27,7 +27,7 @@ def get_new_point(p1, p2, m):
     return (int((p1[0] + p2[0]) * m), int((p1[1] + p2[1]) * m))
 
     # CONSTANTS
-WIDTH = 500
+WIDTH = 900
 HEIGHT = WIDTH
 
 RADIUS = WIDTH / 2 if WIDTH <= HEIGHT else HEIGHT / 2
