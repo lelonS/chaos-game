@@ -25,11 +25,22 @@ def get_points(amount, center):
 def get_new_point(p1, p2, m):
     return (int((p1[0] + p2[0]) * m), int((p1[1] + p2[1]) * m))
 
+def draw_text(t, pos, color=(255,255,255)):
+    global SCREEN
+    myFont = pygame.font.Font(None, 20)
+    text = str(t)
+    renderFont = myFont.render(text, 1, color)
+    SCREEN.blit(renderFont, pos)
 
 def reset_screen():
+    global SCREEN
+    global allow_repeat_point
+    global mult
     SCREEN.fill(BACKGROUND)
     # SCREEN.blit(bg, (0, 0))
     draw_points(points)
+    draw_text("allow_repeat_point=" + str(allow_repeat_point), (0, 20))
+    draw_text("mult=" + str(mult), (0, 40))
 
 
 # CONSTANTS
