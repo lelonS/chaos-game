@@ -25,7 +25,11 @@ def get_points(amount, center):
 
 
 def get_new_point(p1, p2, m):
-    return (int((p1[0] + p2[0]) * m), int((p1[1] + p2[1]) * m))
+    x_dif = p2[0] - p1[0]
+    y_dif = p2[1] - p1[1]
+    x_mult = p1[0] + x_dif * m
+    y_mult = p1[1] + y_dif * m
+    return (int(x_mult), int(y_mult))
 
 def draw_text(t, pos, color=(255,255,255)):
     global SCREEN
@@ -68,7 +72,7 @@ def add_point():
         
 
 # CONSTANTS
-WIDTH = 900
+WIDTH = 800
 HEIGHT = WIDTH
 
 RADIUS = WIDTH / 2 if WIDTH <= HEIGHT else HEIGHT / 2
@@ -126,10 +130,10 @@ while running:
             allow_repeat_point = not allow_repeat_point
             reset_screen()
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_RIGHT:
-            mult += 0.1
+            mult += 0.02
             reset_screen()
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_LEFT:
-            mult -= 0.1
+            mult -= 0.02
             reset_screen()
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_d:
             step = not step
