@@ -1,4 +1,3 @@
-from lib2to3.pgen2.token import BACKQUOTE
 import pygame
 import random
 from math import cos, sin, pi
