@@ -68,7 +68,7 @@ def add_point():
         
 
 # CONSTANTS
-WIDTH = 800
+WIDTH = 900
 HEIGHT = WIDTH
 
 RADIUS = WIDTH / 2 if WIDTH <= HEIGHT else HEIGHT / 2
