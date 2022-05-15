@@ -50,7 +50,7 @@ def reset_screen():
     draw_text("mult=" + str(mult), (0, 40))
     draw_text("step=" + str(step), (0, 60))
 
-def add_point():
+def add_point(big=False):
     global SCREEN
     global MAX_LOOP
     global points
@@ -58,6 +58,7 @@ def add_point():
     global allow_repeat_point
     global current_point
     global mult
+    col = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
     tries = 0
     while tries < MAX_LOOP:
         random_point = random.choice(points)
@@ -66,8 +67,12 @@ def add_point():
             current_point = get_new_point(current_point, random_point, mult)
             # pygame.draw.rect(SCREEN, (255, 0, 0),
             #                  (current_point[0], current_point[1], 1, 1))
-            SCREEN.set_at(current_point, (255, 0, 0))
-            return
+            if not big:
+                SCREEN.set_at(current_point, col)
+            else:
+                pygame.draw.rect(SCREEN, col,
+                             (current_point[0], current_point[1], 5, 5))
+        return
     print("error")
         
 
@@ -140,7 +145,7 @@ while running:
             reset_screen()
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_s and step:
             for i in range(amount_per_frame):
-                add_point()
+                add_point(big=True)
 
 
     pygame.display.update()
