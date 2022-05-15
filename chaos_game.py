@@ -31,12 +31,14 @@ def get_new_point(p1, p2, m):
     y_mult = p1[1] + y_dif * m
     return (int(x_mult), int(y_mult))
 
-def draw_text(t, pos, color=(255,255,255)):
+
+def draw_text(t, pos, color=(255, 255, 255)):
     global SCREEN
     myFont = pygame.font.Font(None, 20)
     text = str(t)
     renderFont = myFont.render(text, 1, color)
     SCREEN.blit(renderFont, pos)
+
 
 def reset_screen():
     global SCREEN
@@ -50,6 +52,7 @@ def reset_screen():
     draw_text("mult=" + str(mult), (0, 40))
     draw_text("step=" + str(step), (0, 60))
 
+
 def add_point(big=False):
     global SCREEN
     global MAX_LOOP
@@ -58,11 +61,13 @@ def add_point(big=False):
     global allow_repeat_point
     global current_point
     global mult
-    col = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
+    col = (random.randint(0, 255), random.randint(
+        0, 255), random.randint(0, 255))
     tries = 0
     while tries < MAX_LOOP:
         random_point = random.choice(points)
-        if (random_point != prev_point or allow_repeat_point):# and SCREEN.get_at(get_new_point(current_point, random_point, mult)) != (255, 255, 255, 255):
+        # and SCREEN.get_at(get_new_point(current_point, random_point, mult)) != (255, 255, 255, 255):
+        if (random_point != prev_point or allow_repeat_point):
             prev_point = random_point
             current_point = get_new_point(current_point, random_point, mult)
             # pygame.draw.rect(SCREEN, (255, 0, 0),
@@ -71,13 +76,13 @@ def add_point(big=False):
                 SCREEN.set_at(current_point, col)
             else:
                 pygame.draw.rect(SCREEN, col,
-                             (current_point[0], current_point[1], 5, 5))
+                                 (current_point[0], current_point[1], 5, 5))
         return
     print("error")
-        
+
 
 # CONSTANTS
-WIDTH = 800
+WIDTH = 900
 HEIGHT = WIDTH
 
 RADIUS = WIDTH / 2 if WIDTH <= HEIGHT else HEIGHT / 2
@@ -128,7 +133,8 @@ while running:
             reset_screen()
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_DOWN:
             amount_points -= 1
-            if amount_points <= 0: amount_points = 1
+            if amount_points <= 0:
+                amount_points = 1
             points = get_points(amount_points, (WIDTH/2, HEIGHT/2))
             reset_screen()
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_r:
@@ -146,7 +152,6 @@ while running:
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_s and step:
             for i in range(amount_per_frame):
                 add_point(big=True)
-
 
     pygame.display.update()
 # QUIT
